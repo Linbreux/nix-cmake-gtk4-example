@@ -29,8 +29,6 @@ stdenv.mkDerivation {
   ];
 
   configurePhase = ''
-    ls
-
     cmake -B cmake-build -S .
 
     cd cmake-build

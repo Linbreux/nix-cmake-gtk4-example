@@ -21,7 +21,8 @@ protected:
   // Member widgets:
   Gtk::Fixed *p_fixed;
   Gtk::Button m_button;
-  Gtk::Label m_label;
+
+  Gtk::Label *m_label = nullptr;
 };
 
 #endif // GTKMM_EXAMPLE_HELLOWORLD_H

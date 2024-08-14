@@ -4,7 +4,7 @@
 #include "gtkmm/object.h"
 #include <iostream>
 
-WelcomePage::WelcomePage() : m_button("Hello World"), m_label("nix window") {
+WelcomePage::WelcomePage() : m_button("Hello World") {
   set_title("Main window");
 
   auto m_headerBar = Gtk::make_managed<Gtk::HeaderBar>();
@@ -24,7 +24,12 @@ WelcomePage::WelcomePage() : m_button("Hello World"), m_label("nix window") {
 WelcomePage::~WelcomePage() {}
 
 void WelcomePage::on_button_clicked() {
-  m_label.set_margin(10);
-  this->p_fixed->put(m_label, 250, 55);
   std::cout << core::greet() << std::endl;
+
+  if (!this->m_label) {
+    m_label = Gtk::make_managed<Gtk::Label>("old data");
+    m_label->set_margin(10);
+    this->p_fixed->put(*m_label, 250, 55);
+  }
+  m_label->set_text(core::greet());
 }

@@ -13,17 +13,12 @@
       guiApp = pkgs.callPackage ./src/GUI/default.nix {
           inherit coreLib;
         };
-
     in{
       apps.${system}.default = {
         type = "app";
         program = "${guiApp}/bin/gui_program";
       };
-      packages.${system}.default = pkgs.buildEnv {
-        name = "combinedEnv";
-        paths = [ guiApp ];  # Include the packages in the environment
-      };
-      devShells.${system}.default = pkgs.mkShell {
+    devShells.${system}.default = pkgs.mkShell {
         buildInputs = [
           pkgs.gdb
           pkgs.gtkmm4
@@ -37,6 +32,12 @@
           pkgs.clang_18
         ];
         shellHook = ''
+          # Create a build dir. This allows the LSP to see compile_comands
+          echo DEV Console starting...
+          echo Creating build dir, allows LSP to find compile_comands
+
+          mkdir -p build
+          cmake -S . -B build
         '';
       };
     };
